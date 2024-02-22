@@ -1,4 +1,4 @@
-# Micronaut & Java Demo with a Postgres datavase
+# Micronaut & Java Demo with a Postgres Database
 
 Demo Micronaut application written in Java exposing a REST API to enable performing of CRUD operations on an entity that is persisted to Postgres.
 
