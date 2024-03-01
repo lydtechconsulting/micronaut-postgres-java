@@ -1,0 +1,69 @@
+[
+  {
+    "name": "org.flywaydb.database.postgresql.PostgreSQLConfigurationExtension",
+    "methods": [
+      {
+        "name": "isTransactionalLock",
+        "parameterTypes": [],
+        "returnType": "boolean"
+      },
+      {
+        "name": "getTransactional",
+        "parameterTypes": [],
+        "returnType": "org.flywaydb.database.postgresql.TransactionalModel"
+      },
+      {
+        "name": "setTransactional",
+        "parameterTypes": ["org.flywaydb.database.postgresql.TransactionalModel"],
+        "returnType": "void"
+      },
+      {
+        "name": "setTransactionalLock",
+        "parameterTypes": ["boolean"],
+        "returnType": "void"
+      }
+    ]
+  },
+  {
+    "name": "org.hibernate.SessionFactory",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [],
+        "returnType": "void"
+      }
+    ],
+    "fields": [
+      {
+        "name": "sessionFactoryName",
+        "allowWrite": true
+      }
+    ]
+  },
+  {
+  "name": "org.hibernate.dialect.DialectLogging_$logger",
+  "methods":
+  [
+    {
+      "name": "<init>",
+      "parameterTypes":
+      [
+        "org.jboss.logging.Logger"
+      ]
+    }
+  ]
+},
+  {
+    "name": "org.hibernate.metamodel.mapping.MappingModelCreationLogging_$logger",
+    "methods":
+    [
+      {
+        "name": "<init>",
+        "parameterTypes":
+        [
+          "org.jboss.logging.Logger"
+        ]
+      }
+    ]
+  }
+]
