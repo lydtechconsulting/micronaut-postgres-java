@@ -1,10 +1,13 @@
 plugins {
     id("io.micronaut.application") version "4.3.2"
     id("io.micronaut.aot") version "4.3.2"
-    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("application")
+    id("org.graalvm.buildtools.native") version "0.10.1"
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -14,12 +17,12 @@ dependencies {
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.data:micronaut-data-jpa:4.6.2")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa:4.6.2")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.flyway:micronaut-flyway")
+    implementation("io.micronaut:micronaut-management")
     implementation("org.apache.commons:commons-lang3:3.14.0")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("javax.persistence:javax.persistence-api:2.2")
@@ -28,12 +31,17 @@ dependencies {
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("org.projectlombok:lombok:1.18.30")
 
+    runtimeOnly("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.yaml:snakeyaml")
 
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+    testCompileOnly("org.projectlombok:lombok:1.18.30")
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("org.hamcrest:hamcrest:2.2")
     testImplementation("org.mockito:mockito-core:2.1.0")
+    testImplementation("dev.lydtech:component-test-framework:2.10.0")
+    testImplementation("io.rest-assured:rest-assured:5.4.0")
     testImplementation("com.h2database:h2")
 }
 
@@ -52,6 +60,7 @@ graalvmNative {
     binaries {
         main {
             imageName.set('demo-graalvm-application')
+            mainClass = 'demo.DemoApplication'
             buildArgs.add('--verbose')
         }
     }
@@ -61,13 +70,38 @@ micronaut {
     runtime("netty")
     testRuntime("junit5")
 }
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+tasks {
+    dockerfileNative {
+        baseImage('ghcr.io/graalvm/native-image-community:21')
+        jdkVersion.set('21')
+    }
+    dockerBuildNative {
+        images = ["ct/micronaut-rest-java"]
     }
 }
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+micronaut {
+    runtime("netty")
+    testRuntime('junit5')
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
     }
+    include '**/*Test.*'
+}
+
+tasks.register('componentTest', Test) {
+    useJUnitPlatform()
+    include '**/*CT.*'
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+    systemProperties = System.properties
+    environment "TESTCONTAINERS_REUSE_ENABLE", System.getProperty('containers.stayup')
 }
