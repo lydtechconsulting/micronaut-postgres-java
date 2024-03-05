@@ -1,0 +1,12 @@
+datasources:
+  default:
+    url: jdbc:postgresql://postgres:5432/test?currentSchema=demo
+    username: user
+    password: password
+
+flyway:
+  datasources:
+    default:
+      url: jdbc:postgresql://postgres:5432/test?currentSchema=demo
+      username: user
+      password: password

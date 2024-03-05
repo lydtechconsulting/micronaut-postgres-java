@@ -5,6 +5,9 @@ Demo Micronaut application written in Java exposing a REST API to enable perform
 <div style="text-align:center"><img src="micronaut-postgres.png" /></div>
 <p style="text-align: center;"><I>Figure 1: Micronaut application with Postgres</I></p>
 
+The companion project, with the application written in Kotlin instead of Java, is available here:
+https://github.com/lydtechconsulting/micronaut-postgres-kotlin
+
 ## Running The Demo
 
 The project requires Java 21 to build.
@@ -34,10 +37,10 @@ The component tests bring up the application and Postgres in docker containers a
 
 For more on the component tests see: https://github.com/lydtechconsulting/component-test-framework
 
-Build the Micronaut application jar, followed by the Docker container:
+First ensure the Project module paths are set to `Inherit project compile output path` to ensure the fat jar is built in `./build/libs`.  Then build the Micronaut application jar, followed by the Docker container:
 ```
 ./gradlew clean build
-docker build -t ct/micronaut-rest-java:latest .
+docker build -t ct/micronaut-postgres-java:latest .
 ```
 
 Run component tests:
