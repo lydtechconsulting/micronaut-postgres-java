@@ -55,30 +55,9 @@ java {
     targetCompatibility = JavaVersion.toVersion("21")
 }
 
-graalvmNative {
-    toolchainDetection = false
-    binaries {
-        main {
-            imageName.set('demo-graalvm-application')
-            mainClass = 'demo.DemoApplication'
-            buildArgs.add('--verbose')
-        }
-    }
-}
-
 micronaut {
     runtime("netty")
     testRuntime("junit5")
-}
-
-tasks {
-    dockerfileNative {
-        baseImage('ghcr.io/graalvm/native-image-community:21')
-        jdkVersion.set('21')
-    }
-    dockerBuildNative {
-        images = ["ct/micronaut-postgres-java"]
-    }
 }
 
 micronaut {

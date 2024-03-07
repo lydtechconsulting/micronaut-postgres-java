@@ -31,13 +31,21 @@ public class ItemService {
     }
 
     public GetItemResponse getItem(UUID itemId) {
-        Item item = itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> {
+                    log.warn("Item with id: {} not found", itemId);
+                    return new ItemNotFoundException();
+                });
         log.info("Found item with id: {}", itemId);
         return new GetItemResponse(item.getId(), item.getName());
     }
 
     public void updateItem(UUID itemId, UpdateItemRequest request) {
-        Item item = itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> {
+                    log.warn("Item with id: {} not found", itemId);
+                    return new ItemNotFoundException();
+                });
         log.info("Found item with id: " + itemId);
         item.setName(request.name());
         itemRepository.save(item);
@@ -45,7 +53,11 @@ public class ItemService {
     }
 
     public void deleteItem(UUID itemId) {
-        Item item = itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> {
+                    log.warn("Item with id: {} not found", itemId);
+                    return new ItemNotFoundException();
+                });
         itemRepository.delete(item);
         log.info("Deleted item with id: {}", itemId);
     }
