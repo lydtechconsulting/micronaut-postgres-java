@@ -30,7 +30,6 @@ dependencies {
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("org.projectlombok:lombok:1.18.30")
 
-    runtimeOnly("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.yaml:snakeyaml")
 
