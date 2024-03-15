@@ -6,16 +6,13 @@ micronaut:
 
 datasources:
     default:
-        url: jdbc:postgresql://localhost:5432/postgres?currentSchema=demo
+        url: jdbc:postgresql://localhost:5432/postgres
         driverClassName: org.postgresql.Driver
         username: postgres
         password: postgres
         dialect: POSTGRES
 
-flyway:
+liquibase:
     datasources:
         default:
-            url: jdbc:postgresql://localhost:5432/postgres?currentSchema=demo
-            username: postgres
-            password: postgres
-    locations: classpath:db/migration
+            change-log: classpath:db/changelog.yml

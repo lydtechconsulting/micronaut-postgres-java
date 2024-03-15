@@ -1,17 +1,16 @@
 package demo.domain;
 
 import java.util.UUID;
+import javax.persistence.Id;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import io.micronaut.data.annotation.AutoPopulated;
+import io.micronaut.data.annotation.MappedEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name="Item")
+@MappedEntity
 @Builder
 @Data
 @NoArgsConstructor
@@ -19,8 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Item {
 
         @Id
-        @GeneratedValue(generator = "uuid2")
-        @GenericGenerator(name = "uuid2", strategy = "uuid2")
+        @AutoPopulated
         private UUID id;
 
         private String name;

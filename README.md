@@ -5,6 +5,8 @@ Demo Micronaut application written in Java exposing a REST API to enable perform
 <div style="text-align:center"><img src="micronaut-postgres.png" /></div>
 <p style="text-align: center;"><I>Figure 1: Micronaut application with Postgres</I></p>
 
+Demonstrates using both a standard JVM-based application and a native image using GraalVM.  GraalVM compiles the Java application ahead of time into a platform-specific native binary executable. This native executable does not require a Java runtime environment to execute. Instead, it can be executed directly on the target platform.  This can lead to faster startup times and reduced memory footprint compared to running on the JVM.
+
 The companion project, with the application written in Kotlin instead of Java, is available here:
 https://github.com/lydtechconsulting/micronaut-postgres-kotlin
 
@@ -22,6 +24,14 @@ Build and test the Micronaut application, and then run, with:
 ./gradlew clean test
 ./gradlew run
 ```
+
+Alternatively, following tests, build a native executable with GraalVM (version 21) - [install instructions](https://www.graalvm.org/latest/docs/getting-started/) - and then run the executable:
+```
+./gradlew clean test
+./gradlew nativeCompile
+./gradlew nativeRun
+```
+The standard `test` task is used as using the `@MicronautTest` annotation on the integration tests is not compatible with Java/Native.
 
 In a terminal window use curl request to create (which returns a location header), retrieve, update and delete an item:
 ```
@@ -41,6 +51,12 @@ First ensure the Project module paths are set to `Inherit project compile output
 ```
 ./gradlew clean build
 docker build -t ct/micronaut-postgres-java:latest .
+```
+
+Alternatively, build a native executable with GraalVM, followed by the Docker container:
+```
+./gradlew clean nativeCompile
+./gradlew dockerBuildNative
 ```
 
 Run component tests:

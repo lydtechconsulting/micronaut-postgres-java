@@ -60,7 +60,7 @@ public class ItemServiceTest {
 
         service.updateItem(itemId, request);
 
-        verify(itemRepository, times(1)).save(any(Item.class));
+        verify(itemRepository, times(1)).update(any(Item.class));
 
     }
 

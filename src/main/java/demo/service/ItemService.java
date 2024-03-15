@@ -48,7 +48,7 @@ public class ItemService {
                 });
         log.info("Found item with id: " + itemId);
         item.setName(request.name());
-        itemRepository.save(item);
+        itemRepository.update(item);
         log.info("Item updated with id: {} - name: {}", itemId, request.name());
     }
 

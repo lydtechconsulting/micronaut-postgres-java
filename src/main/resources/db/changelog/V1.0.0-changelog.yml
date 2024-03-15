@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-item
+      author: demo
+      changes:
+        - createTable:
+            tableName: item
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(4096)
+                  constraints:
+                    nullable: false
+            primaryKey:
+              - columnNames:
+                  - id
