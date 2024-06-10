@@ -4,20 +4,20 @@ databaseChangeLog:
       author: demo
       changes:
         - createTable:
-            tableName: item
+            tableName: ITEM
             ifNotExists: true
             columns:
               - column:
-                  name: id
+                  name: ID
                   type: UUID
                   constraints:
                     nullable: false
                     primaryKey: true
               - column:
-                  name: name
+                  name: NAME
                   type: VARCHAR(4096)
                   constraints:
                     nullable: false
             primaryKey:
               - columnNames:
-                  - id
+                  - ID
